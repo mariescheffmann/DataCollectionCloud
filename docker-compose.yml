@@ -1,0 +1,26 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5032:5032"
+    volumes:
+      - .:/app
+  
+  mosquitto: # MQTT Broker
+    image: eclipse-mosquitto:latest
+    container_name: mosquitto
+    restart: unless-stopped
+    ports:
+      - "1883:1883" # Standard MQTT
+      - "9001:9001" # WebSockets
+    volumes:
+      - ./mosquitto.conf:/mosquitto/config/mosquitto.conf
+  
+  mqttx: # MQTTX Web UI
+    image: emqx/mqttx-web:latest
+    container_name: mqttx
+    restart: unless-stopped
+    ports:
+      - "8083:80"
