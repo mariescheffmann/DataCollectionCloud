@@ -10,7 +10,7 @@ services:
       - /Web/node-modules
   
   mosquitto: # MQTT Broker
-    image: eclipse-mosquitto:latest
+    image: eclipse-mosquitto:2.0.22
     container_name: mosquitto
     restart: unless-stopped
     ports:
@@ -20,17 +20,19 @@ services:
       - ./mosquitto.conf:/mosquitto/config/mosquitto.conf
   
   mqttx: # MQTTX Web UI
-    image: emqx/mqttx-web:latest
+    image: emqx/mqttx-web:v1.12.1
     container_name: mqttx
     restart: unless-stopped
     ports:
       - "8083:80"
   
   grafana:
-    image: grafana/grafana:latest
+    image: grafana/grafana:12.2
     ports:
       - '3000:3000'
     environment:
-      - GF_SECURITY_ADMIN_USER=admin
-      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_SECURITY_ADMIN_USER=${GRAFANA_USERNAME}
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD}
+      # - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=${INFLUX_TOKEN}
+      - GF_INSTALL_PLUGINS=yesoreyeram-infinity-datasource
     restart: always
