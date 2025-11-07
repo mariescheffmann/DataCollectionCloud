@@ -1,0 +1,36 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5032:5032"
+    volumes:
+      - ./Web:/Web
+      - /Web/node-modules
+  
+  mosquitto: # MQTT Broker
+    image: eclipse-mosquitto:latest
+    container_name: mosquitto
+    restart: unless-stopped
+    ports:
+      - "1883:1883" # Standard MQTT
+      - "9001:9001" # WebSockets
+    volumes:
+      - ./mosquitto.conf:/mosquitto/config/mosquitto.conf
+  
+  mqttx: # MQTTX Web UI
+    image: emqx/mqttx-web:latest
+    container_name: mqttx
+    restart: unless-stopped
+    ports:
+      - "8083:80"
+  
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - '3000:3000'
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    restart: always
