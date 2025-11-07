@@ -1,11 +1,16 @@
-FROM python:3.11-slim
+FROM node:20-alpine
 
-WORKDIR /Web
+WORKDIR /DataCollectionCloud
 
-COPY requirements.txt .
-COPY .env .env
-COPY Web /Web
+COPY package*.json ./
+RUN npm install
 
-RUN pip install --upgrade pip && pip install -r requirements.txt
+COPY tsconfig.json .env ./
+COPY Web ./Web
 
-CMD ["python", "main.py"]
+# Build TypeScript to JavaScript
+RUN npm run build
+
+EXPOSE 5032
+
+CMD ["node", "Web/dist/server.js"]

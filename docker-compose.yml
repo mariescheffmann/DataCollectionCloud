@@ -6,7 +6,8 @@ services:
     ports:
       - "5032:5032"
     volumes:
-      - .:/app
+      - ./Web:/Web
+      - /Web/node-modules
   
   mosquitto: # MQTT Broker
     image: eclipse-mosquitto:latest
@@ -24,3 +25,12 @@ services:
     restart: unless-stopped
     ports:
       - "8083:80"
+  
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - '3000:3000'
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    restart: always
