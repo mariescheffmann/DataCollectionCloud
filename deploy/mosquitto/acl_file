@@ -1,0 +1,3 @@
+user device-123
+topic write device/device-123/#
+topic read device/device-123/ack/#
