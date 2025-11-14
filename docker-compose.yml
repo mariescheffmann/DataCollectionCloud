@@ -8,7 +8,7 @@ services:
     volumes:
       - ./Web:/Web
       - /Web/node-modules
-  
+
   mosquitto: # MQTT Broker
     image: eclipse-mosquitto:latest
     container_name: mosquitto
@@ -18,14 +18,14 @@ services:
       - "9001:9001" # WebSockets
     volumes:
       - ./mosquitto.conf:/mosquitto/config/mosquitto.conf
-  
+
   mqttx: # MQTTX Web UI
     image: emqx/mqttx-web:latest
     container_name: mqttx
     restart: unless-stopped
     ports:
       - "8083:80"
-  
+
   grafana:
     image: grafana/grafana:latest
     ports:
@@ -34,3 +34,31 @@ services:
       - GF_SECURITY_ADMIN_USER=admin
       - GF_SECURITY_ADMIN_PASSWORD=admin
     restart: always
+
+  influxdb:
+    image: influxdb:2.7
+    container_name: influxdb
+    restart: unless-stopped
+    ports:
+      - "8086:8086"
+    environment:
+      DOCKER_INFLUXDB_INIT_MODE: setup
+      DOCKER_INFLUXDB_INIT_USERNAME: admin
+      DOCKER_INFLUXDB_INIT_PASSWORD_FILE: /run/secrets/influx_password
+      DOCKER_INFLUXDB_INIT_ORG: myorg
+      DOCKER_INFLUXDB_INIT_BUCKET: mybucket
+      DOCKER_INFLUXDB_INIT_ADMIN_TOKEN_FILE: /run/secrets/influx_token
+    volumes:
+      - influxdb_data:/var/lib/influxdb2
+    secrets:
+      - influx_password
+      - influx_token
+
+volumes:
+  influxdb_data:
+
+secrets:
+  influx_password:
+    file: ./secrets/influx/influx_password.txt
+  influx_token:
+    file: ./secrets/influx/influx_token.txt
