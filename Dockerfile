@@ -5,7 +5,7 @@ WORKDIR /DataCollectionCloud
 COPY package*.json ./
 RUN npm install
 
-COPY tsconfig.json .env ./
+COPY tsconfig.json ./
 COPY Web ./Web
 
 # Build TypeScript to JavaScript

@@ -1,0 +1,6 @@
+pattern write device/%u/#
+pattern read device/%u/ack/#
+
+user backend
+topic write device/+/#
+topic read device/+/ack/#

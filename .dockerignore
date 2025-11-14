@@ -1,4 +1,4 @@
-node_modules
+Web/node_modules
 dist
 Dockerfile
 .dockerignore
