@@ -9,6 +9,12 @@ secrets:
     file: ./secrets/grafana/grafana_admin_user.txt
   grafana_admin_password:
     file: ./secrets/grafana/grafana_admin_password.txt
+  influx_password:
+    file: ./secrets/influx/influx_password.txt
+  influx_token:
+    file: ./secrets/influx/influx_token.txt
+  influx_username:
+    file: ./secrets/influx/influx_username.txt
 
 services:
   nginx:
@@ -71,18 +77,19 @@ services:
     expose:
       - "3000"
     environment:
-      - GF_SERVER_ROOT_URL=https://localhost/grafana/
-      - GF_SERVE_SERVER_FROM_SUBPATH=true
-      - GF_AUTH_ANONYMOUS_ENABLED=false
-      - GF_USERS_ALLOW_SIGN_UP=false
-      - GF_SECURITY_DISABLE_INITIAL_ADMIN_PASSWORD_CHANGE=true
-      # - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=${INFLUX_TOKEN}
-      - GF_INSTALL_PLUGINS=yesoreyeram-infinity-datasource
+      GF_SERVER_ROOT_URL: https://localhost/grafana/
+      GF_SERVE_SERVER_FROM_SUBPATH: true
+      GF_AUTH_ANONYMOUS_ENABLED: false
+      GF_USERS_ALLOW_SIGN_UP: false
+      GF_SECURITY_DISABLE_INITIAL_ADMIN_PASSWORD_CHANGE: true
+      DOCKER_INFLUXDB_INIT_ADMIN_TOKEN: /run/secrets/influx_token
+      GF_SECURITY_ADMIN_USER: /run/secrets/grafana_admin_user
+      GF_SECURITY_ADMIN_PASSWORD: grafana_admin_passwor
+      GF_INSTALL_PLUGINS: yesoreyeram-infinity-datasource
     secrets:
-      - source: grafana_admin_user
-        target: GF_SECURITY_ADMIN_USER
-      - source: grafana_admin_password
-        target: GF_SECURITY_ADMIN_PASSWORD
+      - grafana_admin_user
+      - grafana_admin_password
+      - influx_token
     networks: [private]
     restart: unless-stopped
     security_opt: ["no-new-privileges:true"]
@@ -95,22 +102,19 @@ services:
       - "8086:8086"
     environment:
       DOCKER_INFLUXDB_INIT_MODE: setup
-      DOCKER_INFLUXDB_INIT_USERNAME: admin
-      DOCKER_INFLUXDB_INIT_PASSWORD_FILE: /run/secrets/influx_password
       DOCKER_INFLUXDB_INIT_ORG: myorg
       DOCKER_INFLUXDB_INIT_BUCKET: mybucket
       DOCKER_INFLUXDB_INIT_ADMIN_TOKEN_FILE: /run/secrets/influx_token
+      DOCKER_INFLUXDB_INIT_USERNAME: /run/secrets/influx_username
+      DOCKER_INFLUXDB_INIT_PASSWORD_FILE: /run/secrets/influx_password
     volumes:
       - influxdb_data:/var/lib/influxdb2
     secrets:
       - influx_password
       - influx_token
+      - influx_username
+    networks: [private]
+    security_opt: ["no-new-privileges:true"]
 
 volumes:
   influxdb_data:
-
-secrets:
-  influx_password:
-    file: ./secrets/influx/influx_password.txt
-  influx_token:
-    file: ./secrets/influx/influx_token.txt
