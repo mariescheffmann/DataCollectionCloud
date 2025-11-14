@@ -13,12 +13,17 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - ./deploy/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./deploy/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
       - ./deploy/nginx/conf.d:/etc/nginx/conf.d:ro
+      - ./secrets/certs:/secrets/certs:ro
     networks: [private]
     security_opt: ["no-new-privileges:true"]
     read_only: true
-    tmpfs: [/var/run/nginx,/tmp]
+    tmpfs:
+      - /var/cache/nginx
+      - /var/run/nginx
+      - /run
+      - /tmp
 
   web:
     build:
@@ -42,8 +47,8 @@ services:
       - "9001:9001" # WebSockets - will be removed for production
     volumes:
       - ./deploy/mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
-      - ./deploy/mosquitto/acl_files:/mosquitto/config/acl_files:ro
-      - ./deploy/secrets/certs:/mosquitto/certs:ro
+      - ./deploy/mosquitto/acl_file:/mosquitto/config/acl_file:ro
+      - ./secrets/certs:/mosquitto/certs:ro
     networks: [private]
     tmpfs: [/tmp]
     security_opt: ["no-new-privileges:true"]

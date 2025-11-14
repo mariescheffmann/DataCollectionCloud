@@ -1,6 +1,6 @@
 # DataCollectionCloud
 
-## Certification for Windows machine (localhost)
+## Certification for Windows machine (localhost) - Powershell
 
 - winget install FiloSottile.mkcert
 - mkcert -install

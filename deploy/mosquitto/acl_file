@@ -1,3 +1,6 @@
-user device-123
-topic write device/device-123/#
-topic read device/device-123/ack/#
+pattern write device/%u/#
+pattern read device/%u/ack/#
+
+user backend
+topic write device/+/#
+topic read device/+/ack/#
