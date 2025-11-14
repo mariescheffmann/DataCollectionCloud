@@ -43,7 +43,7 @@ services:
     networks: [private]
     tmpfs: [/tmp]
     security_opt: ["no-new-privileges:true"]
-  
+
   mosquitto: # MQTT Broker
     image: eclipse-mosquitto:2.0.22
     container_name: mosquitto
@@ -58,14 +58,14 @@ services:
     networks: [private]
     tmpfs: [/tmp]
     security_opt: ["no-new-privileges:true"]
-  
+
   mqttx: # MQTTX Web UI
     image: emqx/mqttx-web:v1.12.1
     container_name: mqttx
     restart: unless-stopped
     ports:
       - "8083:80"
-  
+
   grafana:
     image: grafana/grafana:12.2
     expose:
@@ -86,3 +86,31 @@ services:
     networks: [private]
     restart: unless-stopped
     security_opt: ["no-new-privileges:true"]
+
+  influxdb:
+    image: influxdb:2.7
+    container_name: influxdb
+    restart: unless-stopped
+    ports:
+      - "8086:8086"
+    environment:
+      DOCKER_INFLUXDB_INIT_MODE: setup
+      DOCKER_INFLUXDB_INIT_USERNAME: admin
+      DOCKER_INFLUXDB_INIT_PASSWORD_FILE: /run/secrets/influx_password
+      DOCKER_INFLUXDB_INIT_ORG: myorg
+      DOCKER_INFLUXDB_INIT_BUCKET: mybucket
+      DOCKER_INFLUXDB_INIT_ADMIN_TOKEN_FILE: /run/secrets/influx_token
+    volumes:
+      - influxdb_data:/var/lib/influxdb2
+    secrets:
+      - influx_password
+      - influx_token
+
+volumes:
+  influxdb_data:
+
+secrets:
+  influx_password:
+    file: ./secrets/influx/influx_password.txt
+  influx_token:
+    file: ./secrets/influx/influx_token.txt
