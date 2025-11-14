@@ -1,5 +1,7 @@
 import mqtt from 'mqtt';
 import dotenv from 'dotenv';
+import { writeSensorData, DataPoint } from './influx';
+
 dotenv.config({ path: '/DataCollectionCloud/.env' });
 
 dotenv.config();
@@ -16,7 +18,17 @@ export function initMqtt() {
     });
   });
 
-  client.on('message', (topic: string, message: Buffer) => {
-    console.log(`Message on ${topic}: ${message.toString()}`);
+  client.on('message', async (topic: string, message: Buffer) => {
+  try {
+    const dataPoint: DataPoint = JSON.parse(message.toString());
+    if (dataPoint.timestamp && typeof dataPoint.timestamp === "string") {
+      dataPoint.timestamp = new Date(dataPoint.timestamp);
+    }
+
+    await writeSensorData(dataPoint);
+    console.log('Wrote to InfluxDB:', dataPoint);
+  } catch (err) {
+    console.error('Failed to parse/write MQTT message:', err);
+  }
   });
 }
