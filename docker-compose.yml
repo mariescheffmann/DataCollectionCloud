@@ -4,6 +4,12 @@ networks:
   private:
     driver: bridge
 
+secrets:
+  grafana_admin_user:
+    file: ./secrets/grafana/grafana_admin_user.txt
+  grafana_admin_password:
+    file: ./secrets/grafana/grafana_admin_password.txt
+
 services:
   nginx:
     image: nginx:1.27-alpine
@@ -65,11 +71,18 @@ services:
     expose:
       - "3000"
     environment:
+      - GF_SERVER_ROOT_URL=https://localhost/grafana/
+      - GF_SERVE_SERVER_FROM_SUBPATH=true
       - GF_AUTH_ANONYMOUS_ENABLED=false
-      - GF_SECURITY_ADMIN_USER=${GRAFANA_USERNAME}
-      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD}
+      - GF_USERS_ALLOW_SIGN_UP=false
+      - GF_SECURITY_DISABLE_INITIAL_ADMIN_PASSWORD_CHANGE=true
       # - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=${INFLUX_TOKEN}
       - GF_INSTALL_PLUGINS=yesoreyeram-infinity-datasource
+    secrets:
+      - source: grafana_admin_user
+        target: GF_SECURITY_ADMIN_USER
+      - source: grafana_admin_password
+        target: GF_SECURITY_ADMIN_PASSWORD
     networks: [private]
     restart: unless-stopped
     security_opt: ["no-new-privileges:true"]
