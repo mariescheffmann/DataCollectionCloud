@@ -15,6 +15,10 @@ secrets:
     file: ./secrets/influx/influx_token.txt
   influx_username:
     file: ./secrets/influx/influx_username.txt
+  postgres_user:
+    file: ./secrets/postgres/postgres_user.txt
+  postgres_password:
+    file: ./secrets/postgres/postgres_password.txt
 
 services:
   nginx:
@@ -108,7 +112,7 @@ services:
     image: influxdb:2.7
     container_name: influxdb
     restart: unless-stopped
-    ports:
+    ports:                    # TODO: make this an "expose" and run it inside nginx
       - "8086:8086"
     environment:
       DOCKER_INFLUXDB_INIT_MODE: setup
@@ -125,6 +129,27 @@ services:
       - influx_username
     networks: [private]
     security_opt: ["no-new-privileges:true"]
+  
+  postgres:
+    container_name: postgres
+    image: postgres:18.1
+    expose:
+      - "5432"
+    environment:
+      POSTGRES_USER_FILE: /run/secrets/postgres_user
+      POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
+      POSTGRES_DB: db
+      PGDATA: /var/lib/postgresql
+    secrets:
+      - postgres_user
+      - postgres_password
+    volumes:
+      - postgres_data:/data/postgres:ro
+      - ./deploy/postgres/create-db.sql:/docker-entrypoint-initdb.d/create_database.sql:ro
+    networks: [private]
+    security_opt: ["no-new-privileges:true"]
+    restart: unless-stopped
 
 volumes:
   influxdb_data:
+  postgres_data:
