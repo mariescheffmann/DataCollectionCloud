@@ -19,7 +19,9 @@ secrets:
 services:
   nginx:
     image: nginx:1.27-alpine
-    depends_on: [web, grafana]
+    depends_on:
+      - web
+      - grafana
     restart: unless-stopped
     ports:
       - "80:80"
@@ -38,6 +40,7 @@ services:
       - /tmp
 
   web:
+    container_name: datacollectioncloud-web-1
     build:
       context: .
       dockerfile: Dockerfile
@@ -46,9 +49,16 @@ services:
     volumes:
       - ./Web:/Web:ro
       - /Web/node-modules
-    networks: [private]
+    networks:
+      - private
     tmpfs: [/tmp]
     security_opt: ["no-new-privileges:true"]
+    env_file:
+      - .env
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5032/"]
+      interval: 5s
+      retries: 10
 
   mosquitto: # MQTT Broker
     image: eclipse-mosquitto:2.0.22
@@ -84,7 +94,7 @@ services:
       GF_SECURITY_DISABLE_INITIAL_ADMIN_PASSWORD_CHANGE: true
       DOCKER_INFLUXDB_INIT_ADMIN_TOKEN: /run/secrets/influx_token
       GF_SECURITY_ADMIN_USER: /run/secrets/grafana_admin_user
-      GF_SECURITY_ADMIN_PASSWORD: grafana_admin_passwor
+      GF_SECURITY_ADMIN_PASSWORD: grafana_admin_password
       GF_INSTALL_PLUGINS: yesoreyeram-infinity-datasource
     secrets:
       - grafana_admin_user
@@ -105,7 +115,7 @@ services:
       DOCKER_INFLUXDB_INIT_ORG: myorg
       DOCKER_INFLUXDB_INIT_BUCKET: mybucket
       DOCKER_INFLUXDB_INIT_ADMIN_TOKEN_FILE: /run/secrets/influx_token
-      DOCKER_INFLUXDB_INIT_USERNAME: /run/secrets/influx_username
+      DOCKER_INFLUXDB_INIT_USERNAME_FILE: /run/secrets/influx_username
       DOCKER_INFLUXDB_INIT_PASSWORD_FILE: /run/secrets/influx_password
     volumes:
       - influxdb_data:/var/lib/influxdb2
