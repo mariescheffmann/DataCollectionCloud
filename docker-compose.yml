@@ -47,7 +47,7 @@ services:
     expose:
       - "5032"
     volumes:
-      - ./Web:/Web
+      - ./Web:/Web:ro
       - /Web/node-modules
     networks:
       - private
