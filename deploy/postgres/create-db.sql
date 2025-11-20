@@ -13,7 +13,7 @@ CREATE TABLE operators (
 -- TODO: insert operator???? -lrp
 
 CREATE TABLE states (
-    id INTEGER PRIMARY KEY,
+    id INTEGER UNIQUE NOT NULL PRIMARY KEY,
     description VARCHAR(355) UNIQUE NOT NULL
 );
 
