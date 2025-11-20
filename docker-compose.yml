@@ -70,7 +70,7 @@ services:
     volumes:
       - ./deploy/mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
       - ./deploy/mosquitto/acl_file:/mosquitto/config/acl_file:ro
-      - ./secrets/certs:/mosquitto/certs:ro
+      - ./secrets/certs:/mosquitto/certs
     networks: [private]
     tmpfs: [/tmp]
     security_opt: ["no-new-privileges:true"]
