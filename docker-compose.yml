@@ -135,10 +135,12 @@ services:
     image: postgres:18.1
     expose:
       - "5432"
+    env_file:
+      - .env
     environment:
       POSTGRES_USER_FILE: /run/secrets/postgres_user
       POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
-      POSTGRES_DB: db
+      POSTGRES_DB: ${POSTGRES_DB}
       PGDATA: /var/lib/postgresql
     secrets:
       - postgres_user
