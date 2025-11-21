@@ -91,7 +91,7 @@ services:
     expose:
       - "3000"
     environment:
-      GF_SERVER_ROOT_URL: https://localhost/grafana/
+      GF_SERVER_ROOT_URL: https://grafana/
       GF_SERVE_SERVER_FROM_SUBPATH: true
       GF_AUTH_ANONYMOUS_ENABLED: false
       GF_USERS_ALLOW_SIGN_UP: false
