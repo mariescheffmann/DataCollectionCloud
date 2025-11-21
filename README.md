@@ -1,5 +1,7 @@
 # DataCollectionCloud
 
+*After completion of this guide, the files edge-client.crt and edge-client.key should be moved to the certs folder on the Edge, ant the file ca.crt should be copied to the same folder.*
+
 ## Certification for Windows machine (localhost) - Powershell
 
 - winget install FiloSottile.mkcert
@@ -13,6 +15,11 @@
 - copy "$env:LOCALAPPDATA\mkcert\rootCA.pem" secrets\certs\ca.crt
 - mkcert -cert-file secrets\certs\mosq-server.crt -key-file secrets\certs\mosq-server.key localhost 127.0.0.1 ::1
 
+#### Make certificates for Edge
+- openssl genrsa -out secrets\certs\edge-client.key 2048
+- openssl req -new -key secrets\certs\edge-client.key -out secrets\certs\edge-client.csr -subj "/CN=edge"
+- $ROOT_CA_KEY = "$(mkcert -CAROOT)\rootCA-key.pem"
+- openssl x509 -req -in secrets\certs\edge-client.csr -CA secrets\certs\ca.crt -CAkey "$ROOT_CA_KEY" -CAcreateserial -out secrets\certs\edge-client.crt -days 365 -sha256
 
 
 ## For mac
@@ -32,3 +39,9 @@ cp "$(mkcert -CAROOT)/rootCA.pem" secrets/certs/ca.crt
 
 # Mosquitto server cert
 mkcert -cert-file secrets/certs/mosq-server.crt -key-file secrets/certs/mosq-server.key localhost 127.0.0.1 ::1
+
+# Create Edge client-certifikat
+openssl genrsa -out secrets/certs/edge-client.key 2048
+openssl req -new -key secrets/certs/edge-client.key -out secrets/certs/edge-client.csr -subj "/CN=edge"
+ROOT_CA_KEY="$(mkcert -CAROOT)/rootCA-key.pem"
+openssl x509 -req -in secrets/certs/edge-client.csr -CA secrets/certs/ca.crt -CAkey "$ROOT_CA_KEY" -CAcreateserial -out secrets/certs/edge-client.crt -days 365 -sha256
