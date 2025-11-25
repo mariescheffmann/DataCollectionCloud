@@ -1,6 +1,6 @@
-pattern write device/%u/#
-pattern read device/%u/ack/#
+pattern write data/%u/#
+pattern read  data/%u/#
 
 user backend
-topic write device/+/#
-topic read device/+/ack/#
+topic read data/#
+topic write backend/#
