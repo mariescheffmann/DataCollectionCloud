@@ -80,7 +80,7 @@ CREATE TABLE recipes (
     g_number VARCHAR(355),
     material_id VARCHAR(355),
     stage VARCHAR(355),
-    recipe_version VARCHAR(355)
+    recipe_version VARCHAR(355),
+    start_time TIMESTAMP NOT NULL,
+    end_time TIMESTAMP
 );
-
--- TODO: insert recipies???? -lrp
