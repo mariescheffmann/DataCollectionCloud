@@ -1,16 +1,8 @@
-CREATE TABLE recipes (
-    id SERIAL PRIMARY KEY, 
-    recipe_description TEXT NOT NULL
-);
-
--- TODO: insert recipies???? -lrp
-
 CREATE TABLE operators (
-    id SERIAL PRIMARY KEY,
-    name VARCHAR(355) UNIQUE NOT NULL
+    name VARCHAR(355) UNIQUE NOT NULL PRIMARY KEY
 );
 
--- TODO: insert operator???? -lrp
+INSERT INTO operators(name) VALUES ('Anonymous');
 
 CREATE TABLE states (
     id INTEGER UNIQUE NOT NULL PRIMARY KEY,
@@ -49,16 +41,9 @@ CREATE TABLE machine_types (
 INSERT INTO machine_types (name)
 VALUES('anon_type_1'), ('anon_type_2');
 
-CREATE TABLE production_lines (
-    id INTEGER UNIQUE NOT NULL PRIMARY KEY 
-);
-
--- TODO: insert production line???? -lrp
-
 CREATE TABLE machines (
     id SERIAL PRIMARY KEY,
-    type_id INTEGER NOT NULL REFERENCES machine_types(id),
-    line_id INTEGER REFERENCES production_lines(id)
+    type_id INTEGER NOT NULL REFERENCES machine_types(id)
 );
 
 -- TODO: insert machine???? -lrp
@@ -81,29 +66,21 @@ CREATE TABLE machine_state_relation (
 
 CREATE TABLE operator_machine_relation (
     id SERIAL PRIMARY KEY,
-    operator_id INTEGER REFERENCES operators(id),
+    operator_name VARCHAR(355) REFERENCES operators(name),
     machine_id INTEGER REFERENCES machines(id),
     start_time TIMESTAMP NOT NULL,
-    end_time TIMESTAMP NOT NULL
+    end_time TIMESTAMP
 );
 
-CREATE TABLE batches (
-    id SERIAL PRIMARY KEY,
-    batch_description TEXT,
-    line_id INTEGER REFERENCES production_lines(id),
-    planned_start_time TIMESTAMP,
-    planned_end_time TIMESTAMP,
-    recipe_id INTEGER REFERENCES recipes(id),
+CREATE TABLE recipes (
+    id SERIAL PRIMARY KEY, 
+    recipe_name TEXT NOT NULL,
+    machine_id INTEGER REFERENCES machines(id),
+    decoration VARCHAR(355),
+    g_number VARCHAR(355),
+    material_id VARCHAR(355),
+    stage VARCHAR(355),
+    recipe_version VARCHAR(355),
     start_time TIMESTAMP NOT NULL,
-    end_time TIMESTAMP NOT NULL,
-    total_output INTEGER,
-    number_of_good_output INTEGER,
-    energy_usage DECIMAL,
-    consumable_usage DECIMAL
-);
-
-CREATE TABLE recipe_batch_relation (
-    id SERIAL PRIMARY KEY,
-    recipe_id INTEGER REFERENCES recipes(id),
-    batch_id INTEGER REFERENCES batches(id)
+    end_time TIMESTAMP
 );

@@ -74,7 +74,7 @@ services:
     volumes:
       - ./deploy/mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
       - ./deploy/mosquitto/acl_file:/mosquitto/config/acl_file:ro
-      - ./secrets/certs:/mosquitto/certs:ro
+      - ./secrets/certs:/mosquitto/certs
     networks: [private]
     tmpfs: [/tmp]
     security_opt: ["no-new-privileges:true"]
@@ -91,7 +91,7 @@ services:
     expose:
       - "3000"
     environment:
-      GF_SERVER_ROOT_URL: https://localhost/grafana/
+      GF_SERVER_ROOT_URL: https://grafana/
       GF_SERVE_SERVER_FROM_SUBPATH: true
       GF_AUTH_ANONYMOUS_ENABLED: false
       GF_USERS_ALLOW_SIGN_UP: false
