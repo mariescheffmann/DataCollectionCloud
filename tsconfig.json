@@ -5,6 +5,9 @@
         "rootDir": "Web/src",
         "outDir": "Web/dist",
         "strict": true,
-        "esModuleInterop": true
+        "esModuleInterop": true,
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+        "useDefineForClassFields": false
     }
 }

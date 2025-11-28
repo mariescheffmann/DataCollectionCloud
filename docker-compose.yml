@@ -9,16 +9,34 @@ secrets:
     file: ./secrets/grafana/grafana_admin_user.txt
   grafana_admin_password:
     file: ./secrets/grafana/grafana_admin_password.txt
+  influx_bucket:
+    file: ./secrets/influx/influx_bucket.txt
+  influx_org:
+    file: ./secrets/influx/influx_org.txt
   influx_password:
     file: ./secrets/influx/influx_password.txt
   influx_token:
     file: ./secrets/influx/influx_token.txt
   influx_username:
     file: ./secrets/influx/influx_username.txt
+  influx_url:
+    file: ./secrets/influx/influx_url.txt
+  mosquitto_broker:
+    file: ./secrets/mosquitto/mosquitto_broker.txt
+  mosquitto_topic_1:
+    file: ./secrets/mosquitto/mosquitto_topic_1.txt
+  mosquitto_topic_2:
+    file: ./secrets/mosquitto/mosquitto_topic_2.txt
   postgres_user:
     file: ./secrets/postgres/postgres_user.txt
   postgres_password:
     file: ./secrets/postgres/postgres_password.txt
+  postgres_db:
+    file: ./secrets/postgres/postgres_db.txt
+  postgres_url:
+    file: ./secrets/postgres/postgres_url.txt
+  postgres_port:
+    file: ./secrets/postgres/postgres_port.txt
 
 services:
   nginx:
@@ -50,6 +68,21 @@ services:
       dockerfile: Dockerfile
     expose:
       - "5032"
+    secrets:
+      - postgres_user
+      - postgres_password
+      - postgres_db
+      - postgres_url
+      - postgres_port
+      - influx_username
+      - influx_password
+      - influx_token
+      - influx_bucket
+      - influx_org
+      - influx_url
+      - mosquitto_broker
+      - mosquitto_topic_1
+      - mosquitto_topic_2
     volumes:
       - ./Web:/Web:ro
       - /node-modules
@@ -57,8 +90,21 @@ services:
       - private
     tmpfs: [/tmp]
     security_opt: ["no-new-privileges:true"]
-    env_file:
-      - .env
+    environment:
+      INFLUX_TOKEN_FILE: /run/secrets/influx_token
+      INFLUX_USERNAME_FILE: /run/secrets/influx_username
+      INFLUX_PASSWORD_FILE: /run/secrets/influx_password
+      INFLUX_ORG_FILE: /run/secrets/influx_org
+      INFLUX_BUCKET_FILE: /run/secrets/influx_bucket
+      INFLUX_URL_FILE: /run/secrets/influx_url
+      POSTGRES_USER_FILE: /run/secrets/postgres_user
+      POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
+      POSTGRES_DB_FILE: /run/secrets/postgres_db
+      POSTGRES_URL_FILE: /run/secrets/postgres_url
+      POSTGRES_PORT_FILE: /run/secrets/postgres_port
+      MOSQUITTO_BROKER_FILE: /run/secrets/mosquitto_broker
+      MOSQUITTO_TOPIC_1_FILE: /run/secrets/mosquitto_topic_1
+      MOSQUITTO_TOPIC_2_FILE: /run/secrets/mosquitto_topic_2
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:5032/"]
       interval: 5s
@@ -118,6 +164,10 @@ services:
     restart: unless-stopped
     ports:                    # TODO: make this an "expose" and run it inside nginx
       - "8086:8086"
+    secrets:
+      - influx_password
+      - influx_token
+      - influx_username
     environment:
       DOCKER_INFLUXDB_INIT_MODE: setup
       DOCKER_INFLUXDB_INIT_ORG: myorg
@@ -127,10 +177,6 @@ services:
       DOCKER_INFLUXDB_INIT_PASSWORD_FILE: /run/secrets/influx_password
     volumes:
       - influxdb_data:/var/lib/influxdb2
-    secrets:
-      - influx_password
-      - influx_token
-      - influx_username
     networks: [private]
     security_opt: ["no-new-privileges:true"]
   
@@ -139,16 +185,15 @@ services:
     image: postgres:18.1
     expose:
       - "5432"
-    env_file:
-      - .env
     environment:
       POSTGRES_USER_FILE: /run/secrets/postgres_user
       POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
-      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_DB_FILE: /run/secrets/postgres_db
       PGDATA: /var/lib/postgresql
     secrets:
       - postgres_user
       - postgres_password
+      - postgres_db
     volumes:
       - postgres_data:/data/postgres:ro
       - ./deploy/postgres/create-db.sql:/docker-entrypoint-initdb.d/create_database.sql:ro
