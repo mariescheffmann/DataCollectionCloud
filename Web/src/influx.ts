@@ -1,12 +1,14 @@
 import { InfluxDB, Point } from '@influxdata/influxdb-client';
-import dotenv from 'dotenv';
-dotenv.config({ path: '/DataCollectionCloud/.env' });
+import { readFileSync } from 'fs';
 
-dotenv.config();
-const url = process.env.INFLUX_URL!;
-const token = process.env.INFLUX_TOKEN!;
-const org = process.env.INFLUX_ORG!;
-const bucket = process.env.INFLUX_BUCKET!;
+const url = process.env.INFLUX_URL_FILE ? readFileSync(process.env.INFLUX_URL_FILE, "utf8").trim() : undefined !;
+const token = process.env.INFLUX_TOKEN_FILE ? readFileSync(process.env.INFLUX_TOKEN_FILE, "utf8").trim() : undefined;
+const org = process.env.INFLUX_ORG_FILE ? readFileSync(process.env.INFLUX_ORG_FILE, "utf8").trim() : undefined !;
+const bucket = process.env.INFLUX_BUCKET_FILE ? readFileSync(process.env.INFLUX_BUCKET_FILE, "utf8").trim() : undefined !;
+
+if (!url || !token || !org || !bucket) {
+  throw new Error("environment variables not configured");
+}
 
 const client = new InfluxDB({ url, token });
 const writeApi = client.getWriteApi(org, bucket);
