@@ -16,8 +16,11 @@ export async function writeAnalyticsData(payload: string) {
 
         const found = await em.find(Operators, {});
         console.log(`All entries in Operators table:`, found);
+        em.clear();
+
+        await orm.close(true);
     } catch (err) {
-        console.log('Error sending payload to SQL database through ORM: ', err)
+        console.log('Error in connection between ORM and SQL db: ', err)
     }
     
 }
