@@ -1,5 +1,5 @@
 import { defineConfig } from "@mikro-orm/postgresql";
-import { Data } from "./entities/Data";
+import { Operators } from "./entities/Operators";
 import { readFileSync } from "fs";
 
 const db = process.env.POSTGRES_DB_FILE ? readFileSync(process.env.POSTGRES_DB_FILE, "utf8").trim() : undefined !;
@@ -13,7 +13,7 @@ if (!url || !db || !user || !password || !port) {
 }
 
 export default defineConfig({
-    entities: [Data],
+    entities: [Operators],
     dbName: db,
     user: user,
     password: password,
