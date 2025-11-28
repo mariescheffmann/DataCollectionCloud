@@ -137,19 +137,23 @@ services:
     expose:
       - "3000"
     environment:
-      GF_SERVER_ROOT_URL: https://grafana/
+      GF_SERVER_ROOT_URL: https://grafana:3000/grafana
       GF_SERVE_SERVER_FROM_SUBPATH: true
       GF_AUTH_ANONYMOUS_ENABLED: false
       GF_USERS_ALLOW_SIGN_UP: false
       GF_SECURITY_DISABLE_INITIAL_ADMIN_PASSWORD_CHANGE: true
-      DOCKER_INFLUXDB_INIT_ADMIN_TOKEN: /run/secrets/influx_token
-      GF_SECURITY_ADMIN_USER: /run/secrets/grafana_admin_user
-      GF_SECURITY_ADMIN_PASSWORD: grafana_admin_password
-      GF_INSTALL_PLUGINS: yesoreyeram-infinity-datasource
+      GF_SECURITY_ADMIN_USER__FILE: /run/secrets/grafana_admin_user
+      GF_SECURITY_ADMIN_PASSWORD__FILE: /run/secrets/grafana_admin_password
+      GF_PLUGINS_PREINSTALL: yesoreyeram-infinity-datasource
+    depends_on:
+      - influxdb
+      - postgres
     secrets:
       - grafana_admin_user
       - grafana_admin_password
       - influx_token
+    volumes:
+      - grafana-data:/var/lib/grafana
     networks: [private]
     restart: unless-stopped
     security_opt: ["no-new-privileges:true"]
@@ -200,3 +204,4 @@ services:
 volumes:
   influxdb_data:
   postgres_data:
+  grafana-data:
