@@ -144,7 +144,17 @@ services:
       GF_SECURITY_DISABLE_INITIAL_ADMIN_PASSWORD_CHANGE: true
       GF_SECURITY_ADMIN_USER__FILE: /run/secrets/grafana_admin_user
       GF_SECURITY_ADMIN_PASSWORD__FILE: /run/secrets/grafana_admin_password
+
+      # Allow unsigned plugins and preinstall them
+      GF_PLUGINS_ALLOW_LOADING_UNSIGNED_PLUGINS: grafana-metricsdrilldown-app,yesoreyeram-infinity-datasource
       GF_PLUGINS_PREINSTALL: yesoreyeram-infinity-datasource
+    entrypoint:
+      - /bin/sh
+      - -c
+      - |
+        export INFLUX_TOKEN=$(cat /run/secrets/influx_token)
+        export DOCKER_INFLUX_URL=$(cat /run/secrets/influx_url)
+        exec /run.sh
     depends_on:
       - influxdb
       - postgres
@@ -152,8 +162,10 @@ services:
       - grafana_admin_user
       - grafana_admin_password
       - influx_token
+      - influx_url
     volumes:
       - grafana-data:/var/lib/grafana
+      - ./deploy/grafana-provisioning/:/etc/grafana/provisioning:ro
     networks: [private]
     restart: unless-stopped
     security_opt: ["no-new-privileges:true"]
