@@ -4,7 +4,7 @@ datasources:
   - name: InfluxDB - new provisioned
     type: influxdb
     access: proxy
-    url: ${DOCKER_INFLUX_URL}
+    url: ${INFLUX_URL}
     isDefault: true
     editable: true
     jsonData:

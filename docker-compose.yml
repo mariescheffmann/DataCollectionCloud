@@ -153,7 +153,11 @@ services:
       - -c
       - |
         export INFLUX_TOKEN=$(cat /run/secrets/influx_token)
-        export DOCKER_INFLUX_URL=$(cat /run/secrets/influx_url)
+        export INFLUX_URL=$(cat /run/secrets/influx_url)
+        export POSTGRES_URL=$(cat /run/secrets/postgres_url)
+        export POSTGRES_USER=$(cat /run/secrets/postgres_user)
+        export POSTGRES_PASSWORD=$(cat /run/secrets/postgres_password)
+        export POSTGRES_DB=$(cat /run/secrets/postgres_db)
         exec /run.sh
     depends_on:
       - influxdb
@@ -163,6 +167,10 @@ services:
       - grafana_admin_password
       - influx_token
       - influx_url
+      - postgres_url
+      - postgres_password
+      - postgres_db
+      - postgres_user
     volumes:
       - grafana-data:/var/lib/grafana
       - ./deploy/grafana-provisioning/:/etc/grafana/provisioning:ro
