@@ -1,6 +1,12 @@
 import { defineConfig } from "@mikro-orm/postgresql";
 import { Operators } from "./entities/Operators";
-import { readFileSync } from "fs";
+import { States } from "./entities/States";
+import { Machines } from "./entities/Machines";
+import { OperatorMachineRelation } from "./entities/OperatorMachineRelation";
+import { MachineStateRelation } from "./entities/MachineStateRelation";
+import { Alarms } from "./entities/Alarms";
+import { Recipes } from "./entities/Recipes";
+import { MachineTypes } from "./entities/MachineTypes";import { readFileSync } from "fs";
 
 const db = process.env.POSTGRES_DB_FILE ? readFileSync(process.env.POSTGRES_DB_FILE, "utf8").trim() : undefined !;
 const user = process.env.POSTGRES_USER_FILE ? readFileSync(process.env.POSTGRES_USER_FILE, "utf8").trim() : undefined !;
@@ -13,7 +19,16 @@ if (!url || !db || !user || !password || !port) {
 }
 
 export default defineConfig({
-    entities: [Operators],
+  entities: [
+      Operators,
+      States,
+      Machines,
+      OperatorMachineRelation,
+      MachineStateRelation,
+      Alarms,
+      Recipes,
+      MachineTypes,
+  ],
     dbName: db,
     user: user,
     password: password,
