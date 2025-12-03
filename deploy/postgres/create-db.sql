@@ -9,8 +9,8 @@ CREATE TABLE states (
     description VARCHAR(355) UNIQUE NOT NULL
 );
 
-INSERT INTO states(id, description) 
-VALUES 
+INSERT INTO states(id, description)
+VALUES
 (0, 'STATE_UNDEFINED'),
 (1, 'STATE_CLEARING'),
 (2, 'STATE_STOPPED'),
@@ -46,7 +46,9 @@ CREATE TABLE machines (
     type_id INTEGER NOT NULL REFERENCES machine_types(id)
 );
 
--- TODO: insert machine???? -lrp
+INSERT INTO machines(id, type_id)
+VALUES
+(1, 1);
 
 CREATE TABLE alarms (
     id SERIAL PRIMARY KEY,
@@ -54,8 +56,6 @@ CREATE TABLE alarms (
     created_on TIMESTAMP NOT NULL,
     machine_id INTEGER NOT NULL REFERENCES machines(id)
 );
-
--- TODO: insert alarm types as table OR is every alarm inserted through backend code with individual description?? -lrp
 
 CREATE TABLE machine_state_relation (
     id SERIAL PRIMARY KEY,
@@ -73,8 +73,8 @@ CREATE TABLE operator_machine_relation (
 );
 
 CREATE TABLE recipes (
-    id SERIAL PRIMARY KEY, 
-    recipe_name TEXT NOT NULL,
+    id SERIAL PRIMARY KEY,
+    recipe_name TEXT,
     machine_id INTEGER REFERENCES machines(id),
     decoration VARCHAR(355),
     g_number VARCHAR(355),
