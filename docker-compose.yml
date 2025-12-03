@@ -27,6 +27,8 @@ secrets:
     file: ./secrets/mosquitto/mosquitto_topic_1.txt
   mosquitto_topic_2:
     file: ./secrets/mosquitto/mosquitto_topic_2.txt
+  mosquitto_topic_prefix:
+    file: ./secrets/mosquitto/mosquitto_topic_prefix.txt
   postgres_user:
     file: ./secrets/postgres/postgres_user.txt
   postgres_password:
@@ -68,6 +70,9 @@ services:
       dockerfile: Dockerfile
     expose:
       - "5032"
+    depends_on:
+      postgres:
+        condition: service_healthy
     secrets:
       - postgres_user
       - postgres_password
@@ -83,6 +88,7 @@ services:
       - mosquitto_broker
       - mosquitto_topic_1
       - mosquitto_topic_2
+      - mosquitto_topic_prefix
     volumes:
       - ./Web:/Web:ro
       - /node-modules
@@ -105,6 +111,7 @@ services:
       MOSQUITTO_BROKER_FILE: /run/secrets/mosquitto_broker
       MOSQUITTO_TOPIC_1_FILE: /run/secrets/mosquitto_topic_1
       MOSQUITTO_TOPIC_2_FILE: /run/secrets/mosquitto_topic_2
+      MOSQUITTO_TOPIC_PREFIX_FILE: /run/secrets/mosquitto_topic_prefix
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:5032/"]
       interval: 5s
@@ -199,7 +206,7 @@ services:
       - influxdb_data:/var/lib/influxdb2
     networks: [private]
     security_opt: ["no-new-privileges:true"]
-  
+
   postgres:
     container_name: postgres
     image: postgres:18.1
@@ -215,11 +222,16 @@ services:
       - postgres_password
       - postgres_db
     volumes:
-      - postgres_data:/data/postgres:ro
+      - postgres_data:/data/postgres
       - ./deploy/postgres/create-db.sql:/docker-entrypoint-initdb.d/create_database.sql:ro
     networks: [private]
     security_opt: ["no-new-privileges:true"]
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $(cat /run/secrets/postgres_user) -d $(cat /run/secrets/postgres_db)"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
 
 volumes:
   influxdb_data:
