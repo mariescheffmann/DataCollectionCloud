@@ -70,6 +70,9 @@ services:
       dockerfile: Dockerfile
     expose:
       - "5032"
+    depends_on:
+      postgres:
+        condition: service_healthy
     secrets:
       - postgres_user
       - postgres_password
@@ -204,6 +207,11 @@ services:
     networks: [private]
     security_opt: ["no-new-privileges:true"]
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
 
 volumes:
   influxdb_data:
