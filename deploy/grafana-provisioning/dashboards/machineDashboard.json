@@ -31,17 +31,124 @@
           "color": {
             "mode": "thresholds"
           },
-          "mappings": [],
+          "mappings": [
+            {
+              "options": {
+                "0": {
+                  "color": "semi-dark-purple",
+                  "index": 0,
+                  "text": "UNDEFINED"
+                },
+                "1": {
+                  "color": "semi-dark-blue",
+                  "index": 1,
+                  "text": "CLEARING"
+                },
+                "2": {
+                  "color": "semi-dark-red",
+                  "index": 2,
+                  "text": "STOPPED"
+                },
+                "3": {
+                  "color": "semi-dark-green",
+                  "index": 3,
+                  "text": "STARTING"
+                },
+                "4": {
+                  "color": "semi-dark-blue",
+                  "index": 4,
+                  "text": "IDLE"
+                },
+                "5": {
+                  "color": "semi-dark-yellow",
+                  "index": 5,
+                  "text": "SUSPENDED"
+                },
+                "6": {
+                  "color": "semi-dark-green",
+                  "index": 6,
+                  "text": "EXECUTE"
+                },
+                "7": {
+                  "color": "semi-dark-orange",
+                  "index": 7,
+                  "text": "STOPPING"
+                },
+                "8": {
+                  "color": "semi-dark-orange",
+                  "index": 8,
+                  "text": "ABORTING"
+                },
+                "9": {
+                  "color": "semi-dark-red",
+                  "index": 9,
+                  "text": "ABORTED"
+                },
+                "10": {
+                  "color": "semi-dark-orange",
+                  "index": 10,
+                  "text": "HOLDING"
+                },
+                "11": {
+                  "color": "semi-dark-red",
+                  "index": 11,
+                  "text": "HELD"
+                },
+                "12": {
+                  "color": "semi-dark-yellow",
+                  "index": 12,
+                  "text": "UNHOLDING"
+                },
+                "13": {
+                  "color": "semi-dark-red",
+                  "index": 13,
+                  "text": "SUSPENDING"
+                },
+                "14": {
+                  "color": "semi-dark-orange",
+                  "index": 14,
+                  "text": "UNSUSPENDING"
+                },
+                "15": {
+                  "color": "semi-dark-yellow",
+                  "index": 15,
+                  "text": "RESETTING"
+                },
+                "16": {
+                  "color": "semi-dark-yellow",
+                  "index": 16,
+                  "text": "COMPLETING"
+                },
+                "17": {
+                  "color": "semi-dark-blue",
+                  "index": 17,
+                  "text": "COMPLETED"
+                },
+                "30": {
+                  "color": "semi-dark-orange",
+                  "index": 18,
+                  "text": "DEACTIVATING"
+                },
+                "31": {
+                  "color": "semi-dark-red",
+                  "index": 19,
+                  "text": "DEACTIVATED"
+                },
+                "32": {
+                  "color": "semi-dark-green",
+                  "index": 20,
+                  "text": "ACTIVATING"
+                }
+              },
+              "type": "value"
+            }
+          ],
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
                 "color": "green",
                 "value": 0
-              },
-              {
-                "color": "red",
-                "value": 80
               }
             ]
           }
@@ -57,7 +164,7 @@
       "id": 2,
       "options": {
         "colorMode": "value",
-        "graphMode": "area",
+        "graphMode": "none",
         "justifyMode": "auto",
         "orientation": "auto",
         "percentChangeColorMode": "standard",
@@ -121,13 +228,13 @@
     },
     {
       "datasource": {
-        "type": "grafana-testdata-datasource",
-        "uid": "df5vh2f5s09hcd"
+        "type": "influxdb",
+        "uid": "P80AD4CAF3BA298EA"
       },
       "fieldConfig": {
         "defaults": {
           "color": {
-            "mode": "thresholds"
+            "mode": "palette-classic-by-name"
           },
           "custom": {
             "axisPlacement": "auto",
@@ -141,17 +248,125 @@
             "lineWidth": 0,
             "spanNulls": false
           },
-          "mappings": [],
+          "fieldMinMax": false,
+          "mappings": [
+            {
+              "options": {
+                "0": {
+                  "color": "semi-dark-purple",
+                  "index": 0,
+                  "text": "UNDEFINED"
+                },
+                "1": {
+                  "color": "semi-dark-blue",
+                  "index": 1,
+                  "text": "CLEARING"
+                },
+                "2": {
+                  "color": "semi-dark-red",
+                  "index": 2,
+                  "text": "STOPPED"
+                },
+                "3": {
+                  "color": "semi-dark-green",
+                  "index": 3,
+                  "text": "STARTING"
+                },
+                "4": {
+                  "color": "semi-dark-blue",
+                  "index": 4,
+                  "text": "IDLE"
+                },
+                "5": {
+                  "color": "semi-dark-yellow",
+                  "index": 5,
+                  "text": "SUSPENDED"
+                },
+                "6": {
+                  "color": "semi-dark-green",
+                  "index": 6,
+                  "text": "EXECUTE"
+                },
+                "7": {
+                  "color": "semi-dark-orange",
+                  "index": 7,
+                  "text": "STOPPING"
+                },
+                "8": {
+                  "color": "semi-dark-orange",
+                  "index": 8,
+                  "text": "ABORTING"
+                },
+                "9": {
+                  "color": "semi-dark-red",
+                  "index": 9,
+                  "text": "ABORTED"
+                },
+                "10": {
+                  "color": "semi-dark-orange",
+                  "index": 10,
+                  "text": "HOLDING"
+                },
+                "11": {
+                  "color": "semi-dark-red",
+                  "index": 11,
+                  "text": "HELD"
+                },
+                "12": {
+                  "color": "semi-dark-yellow",
+                  "index": 12,
+                  "text": "UNHOLDING"
+                },
+                "13": {
+                  "color": "semi-dark-red",
+                  "index": 13,
+                  "text": "SUSPENDING"
+                },
+                "14": {
+                  "color": "semi-dark-orange",
+                  "index": 14,
+                  "text": "UNSUSPENDING"
+                },
+                "15": {
+                  "color": "semi-dark-yellow",
+                  "index": 15,
+                  "text": "RESETTING"
+                },
+                "16": {
+                  "color": "semi-dark-yellow",
+                  "index": 16,
+                  "text": "COMPLETING"
+                },
+                "17": {
+                  "color": "semi-dark-blue",
+                  "index": 17,
+                  "text": "COMPLETED"
+                },
+                "30": {
+                  "color": "semi-dark-orange",
+                  "index": 18,
+                  "text": "DEACTIVATING"
+                },
+                "31": {
+                  "color": "semi-dark-red",
+                  "index": 19,
+                  "text": "DEACTIVATED"
+                },
+                "32": {
+                  "color": "semi-dark-green",
+                  "index": 20,
+                  "text": "ACTIVATING"
+                }
+              },
+              "type": "value"
+            }
+          ],
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
                 "color": "green",
                 "value": 0
-              },
-              {
-                "color": "red",
-                "value": 80
               }
             ]
           }
@@ -164,7 +379,7 @@
         "x": 7,
         "y": 0
       },
-      "id": 1,
+      "id": 11,
       "options": {
         "alignValue": "left",
         "legend": {
@@ -188,8 +403,30 @@
             "type": "grafana-testdata-datasource",
             "uid": "df5vh2f5s09hcd"
           },
+          "groupBy": [],
+          "measurement": "machineState",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT distinct(\"machineState\") FROM \"machineState\" WHERE $timeFilter",
+          "rawQuery": false,
           "refId": "A",
-          "scenarioId": "table_static"
+          "resultFormat": "time_series",
+          "scenarioId": "table_static",
+          "select": [
+            [
+              {
+                "params": [
+                  "machineState"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": []
         }
       ],
       "title": "States",
@@ -197,25 +434,38 @@
     },
     {
       "datasource": {
-        "type": "grafana-testdata-datasource",
-        "uid": "df5vh2f5s09hcd"
+        "type": "influxdb",
+        "uid": "P80AD4CAF3BA298EA"
       },
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "thresholds"
           },
-          "mappings": [],
+          "mappings": [
+            {
+              "options": {
+                "0": {
+                  "color": "semi-dark-blue",
+                  "index": 0,
+                  "text": "FALSE"
+                },
+                "1": {
+                  "color": "semi-dark-red",
+                  "index": 1,
+                  "text": "TRUE"
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "noValue": "FALSE",
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
                 "color": "green",
                 "value": 0
-              },
-              {
-                "color": "red",
-                "value": 80
               }
             ]
           }
@@ -256,8 +506,28 @@
             "type": "grafana-testdata-datasource",
             "uid": "df5vh2f5s09hcd"
           },
+          "groupBy": [],
+          "measurement": "error",
+          "orderByTime": "ASC",
+          "policy": "default",
           "refId": "A",
-          "scenarioId": "table_static"
+          "resultFormat": "time_series",
+          "scenarioId": "table_static",
+          "select": [
+            [
+              {
+                "params": [
+                  "error"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": []
         }
       ],
       "title": "Current Alarm",
@@ -265,13 +535,14 @@
     },
     {
       "datasource": {
-        "type": "grafana-testdata-datasource",
-        "uid": "df5vh2f5s09hcd"
+        "type": "influxdb",
+        "uid": "P80AD4CAF3BA298EA"
       },
       "fieldConfig": {
         "defaults": {
           "color": {
-            "mode": "thresholds"
+            "fixedColor": "text",
+            "mode": "fixed"
           },
           "custom": {
             "axisPlacement": "auto",
@@ -285,17 +556,30 @@
             "lineWidth": 0,
             "spanNulls": false
           },
-          "mappings": [],
+          "fieldMinMax": false,
+          "mappings": [
+            {
+              "options": {
+                "false": {
+                  "color": "semi-dark-blue",
+                  "index": 0,
+                  "text": "FALSE"
+                },
+                "true": {
+                  "color": "semi-dark-red",
+                  "index": 1,
+                  "text": "TRUE"
+                }
+              },
+              "type": "value"
+            }
+          ],
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
                 "color": "green",
                 "value": 0
-              },
-              {
-                "color": "red",
-                "value": 80
               }
             ]
           }
@@ -308,7 +592,7 @@
         "x": 7,
         "y": 6
       },
-      "id": 3,
+      "id": 12,
       "options": {
         "alignValue": "left",
         "legend": {
@@ -332,12 +616,31 @@
             "type": "grafana-testdata-datasource",
             "uid": "df5vh2f5s09hcd"
           },
+          "groupBy": [],
+          "measurement": "error",
+          "orderByTime": "ASC",
+          "policy": "default",
           "refId": "A",
-          "scenarioId": "csv_metric_values",
-          "stringInput": "1,20,90,30,5,0"
+          "resultFormat": "time_series",
+          "scenarioId": "table_static",
+          "select": [
+            [
+              {
+                "params": [
+                  "error"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": []
         }
       ],
-      "title": "Alarms",
+      "title": "Current Alarm",
       "type": "state-timeline"
     },
     {
@@ -394,7 +697,40 @@
       "pluginVersion": "12.2.1",
       "targets": [
         {
-          "refId": "A"
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "totalCounter",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "totalCounter"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": []
         }
       ],
       "title": "Total Items Produced",
@@ -454,7 +790,40 @@
       "pluginVersion": "12.2.1",
       "targets": [
         {
-          "refId": "A"
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "goodItems",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "goodItems"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": []
         }
       ],
       "title": "Good Items",
@@ -462,13 +831,13 @@
     },
     {
       "datasource": {
-        "type": "grafana-testdata-datasource",
-        "uid": "df5vh2f5s09hcd"
+        "type": "influxdb",
+        "uid": "P80AD4CAF3BA298EA"
       },
       "fieldConfig": {
         "defaults": {
           "color": {
-            "mode": "thresholds"
+            "mode": "palette-classic"
           },
           "custom": {
             "axisBorderShow": false,
@@ -476,16 +845,29 @@
             "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
-            "fillOpacity": 80,
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "bars",
+            "fillOpacity": 0,
             "gradientMode": "none",
             "hideFrom": {
               "legend": false,
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
+            "lineInterpolation": "stepAfter",
             "lineWidth": 1,
+            "pointSize": 5,
             "scaleDistribution": {
               "type": "linear"
+            },
+            "showPoints": "always",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
             },
             "thresholdsStyle": {
               "mode": "off"
@@ -498,10 +880,6 @@
               {
                 "color": "green",
                 "value": 0
-              },
-              {
-                "color": "red",
-                "value": 80
               }
             ]
           }
@@ -516,26 +894,17 @@
       },
       "id": 10,
       "options": {
-        "barRadius": 0,
-        "barWidth": 0.97,
-        "fullHighlight": false,
-        "groupWidth": 0.7,
         "legend": {
           "calcs": [],
           "displayMode": "list",
           "placement": "bottom",
           "showLegend": true
         },
-        "orientation": "auto",
-        "showValue": "auto",
-        "stacking": "none",
         "tooltip": {
           "hideZeros": false,
           "mode": "single",
           "sort": "none"
-        },
-        "xTickLabelRotation": 0,
-        "xTickLabelSpacing": 0
+        }
       },
       "pluginVersion": "12.2.1",
       "targets": [
@@ -544,18 +913,57 @@
             "type": "grafana-testdata-datasource",
             "uid": "df5vh2f5s09hcd"
           },
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "goodItems",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT sum(count(\"goodItems\")) FROM \"goodItems\" WHERE $timeFilter GROUP BY time($__interval) fill(previous)",
+          "rawQuery": false,
           "refId": "A",
+          "resultFormat": "time_series",
           "scenarioId": "csv_metric_values",
-          "stringInput": "1,20,90,30,5,0"
+          "select": [
+            [
+              {
+                "params": [
+                  "goodItems"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "count"
+              },
+              {
+                "params": [],
+                "type": "cumulative_sum"
+              }
+            ]
+          ],
+          "stringInput": "1,20,90,30,5,0",
+          "tags": []
         }
       ],
       "title": "Good Items / 5 min",
-      "type": "barchart"
+      "type": "timeseries"
     },
     {
       "datasource": {
-        "type": "influxdb",
-        "uid": "P80AD4CAF3BA298EA"
+        "type": "grafana-postgresql-datasource",
+        "uid": "PA2B3A7E061A952EA"
       },
       "fieldConfig": {
         "defaults": {
@@ -596,7 +1004,7 @@
           "calcs": [
             "lastNotNull"
           ],
-          "fields": "",
+          "fields": "/.*/",
           "values": false
         },
         "showPercentChange": false,
@@ -606,7 +1014,39 @@
       "pluginVersion": "12.2.1",
       "targets": [
         {
-          "refId": "A"
+          "dataset": "AnalyticsData",
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "PA2B3A7E061A952EA"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT name FROM machine_types WHERE id = 1",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [
+                  {
+                    "name": "name",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          },
+          "table": "machine_types"
         }
       ],
       "title": "Machine Type",
@@ -666,7 +1106,40 @@
       "pluginVersion": "12.2.1",
       "targets": [
         {
-          "refId": "A"
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "rejectItems",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "rejectItems"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": []
         }
       ],
       "title": "Rejected Items",
@@ -680,19 +1153,37 @@
       "fieldConfig": {
         "defaults": {
           "color": {
-            "mode": "thresholds"
+            "mode": "fixed"
           },
-          "mappings": [],
+          "mappings": [
+            {
+              "options": {
+                "0": {
+                  "color": "semi-dark-green",
+                  "index": 2,
+                  "text": "FALSE"
+                },
+                "false": {
+                  "color": "semi-dark-red",
+                  "index": 0,
+                  "text": "FALSE"
+                },
+                "true": {
+                  "color": "semi-dark-green",
+                  "index": 1,
+                  "text": "TRUE"
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "noValue": "0",
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
                 "color": "green",
                 "value": 0
-              },
-              {
-                "color": "red",
-                "value": 80
               }
             ]
           }
@@ -708,15 +1199,15 @@
       "id": 9,
       "options": {
         "colorMode": "value",
-        "graphMode": "area",
+        "graphMode": "none",
         "justifyMode": "auto",
         "orientation": "auto",
         "percentChangeColorMode": "standard",
         "reduceOptions": {
           "calcs": [
-            "lastNotNull"
+            "last"
           ],
-          "fields": "",
+          "fields": "/^airPressureOn\\.last$/",
           "values": false
         },
         "showPercentChange": false,
@@ -726,7 +1217,40 @@
       "pluginVersion": "12.2.1",
       "targets": [
         {
-          "refId": "A"
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "airPressureOn",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "airPressureOn"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": []
         }
       ],
       "title": "Air Pressure ON",
