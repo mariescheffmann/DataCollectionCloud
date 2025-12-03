@@ -161,6 +161,7 @@ services:
       - |
         export INFLUX_TOKEN=$(cat /run/secrets/influx_token)
         export INFLUX_URL=$(cat /run/secrets/influx_url)
+        export INFLUX_USERNAME=$(cat /run/secrets/influx_username)
         export POSTGRES_URL=$(cat /run/secrets/postgres_url)
         export POSTGRES_USER=$(cat /run/secrets/postgres_user)
         export POSTGRES_PASSWORD=$(cat /run/secrets/postgres_password)
@@ -174,6 +175,7 @@ services:
       - grafana_admin_password
       - influx_token
       - influx_url
+      - influx_username
       - postgres_url
       - postgres_password
       - postgres_db
@@ -199,6 +201,9 @@ services:
       DOCKER_INFLUXDB_INIT_MODE: setup
       DOCKER_INFLUXDB_INIT_ORG: myorg
       DOCKER_INFLUXDB_INIT_BUCKET: mybucket
+      INFLUXDB_ENABLE_INFLUXQL: yes
+      INFLUXDB_ENABLE_INFLUXQL_AUTH: yes
+      DOCKER_INFLUXDB_INIT_RETENTION: 0
       DOCKER_INFLUXDB_INIT_ADMIN_TOKEN_FILE: /run/secrets/influx_token
       DOCKER_INFLUXDB_INIT_USERNAME_FILE: /run/secrets/influx_username
       DOCKER_INFLUXDB_INIT_PASSWORD_FILE: /run/secrets/influx_password

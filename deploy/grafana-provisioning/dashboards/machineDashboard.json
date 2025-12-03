@@ -18,13 +18,13 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 0,
+  "id": 2,
   "links": [],
   "panels": [
     {
       "datasource": {
-        "type": "grafana-testdata-datasource",
-        "uid": "df5vh2f5s09hcd"
+        "type": "influxdb",
+        "uid": "P80AD4CAF3BA298EA"
       },
       "fieldConfig": {
         "defaults": {
@@ -79,8 +79,41 @@
             "type": "grafana-testdata-datasource",
             "uid": "df5vh2f5s09hcd"
           },
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "machineState",
+          "orderByTime": "ASC",
+          "policy": "default",
           "refId": "A",
-          "scenarioId": "table_static"
+          "resultFormat": "time_series",
+          "scenarioId": "table_static",
+          "select": [
+            [
+              {
+                "params": [
+                  "machineState"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": []
         }
       ],
       "title": "Current State",
@@ -712,10 +745,14 @@
           "text": "All",
           "value": "$__all"
         },
+        "definition": " SELECT * FROM \"ip\"",
         "includeAll": true,
         "name": "MachineName",
         "options": [],
-        "query": "",
+        "query": {
+          "query": " SELECT * FROM \"ip\"",
+          "refId": "InfluxVariableQueryEditor-VariableQuery"
+        },
         "refresh": 1,
         "regex": "",
         "type": "query"
@@ -730,5 +767,5 @@
   "timezone": "browser",
   "title": "Machine Dashboard",
   "uid": "ads8cx4",
-  "version": 10
+  "version": 1
 }

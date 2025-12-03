@@ -9,12 +9,9 @@ datasources:
     editable: true
     jsonData:
       version: InfluxQL
-      organization: myorg
-      defaultBucket: mybucket
-      httpMode: api
-      # Grafana requires this for InfluxQL:
-      database: mybucket
+      dbName: mybucket
+      httpHeaderName1: 'Authorization'
       retentionPolicy: ""
     secureJsonData:
-      token: ${INFLUX_TOKEN}
-    basicAuth: false
+      httpHeaderValue1: 'Token ${INFLUX_TOKEN}'
+    basicAuth: true
