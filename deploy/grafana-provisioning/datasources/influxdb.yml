@@ -8,9 +8,13 @@ datasources:
     isDefault: true
     editable: true
     jsonData:
-      version: SQL
+      version: InfluxQL
       organization: myorg
       defaultBucket: mybucket
+      httpMode: api
+      # Grafana requires this for InfluxQL:
+      database: mybucket
+      retentionPolicy: ""
     secureJsonData:
       token: ${INFLUX_TOKEN}
     basicAuth: false
