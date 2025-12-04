@@ -1,0 +1,19 @@
+apiVersion: 1
+
+datasources:
+  - name: Postgres - new provisioned
+    type: postgres
+    url: ${POSTGRES_URL}
+    access: proxy
+    user: ${POSTGRES_USER}
+    secureJsonData:
+      password: ${POSTGRES_PASSWORD}
+    jsonData:
+      database: ${POSTGRES_DB}
+      sslmode: 'disable'
+      maxOpenConns: 100
+      maxIdleConns: 100
+      maxIdleConnsAuto: true
+      connMaxLifetime: 14400
+      postgresVersion: 903
+      timescaledb: false
