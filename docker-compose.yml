@@ -151,8 +151,6 @@ services:
       GF_SECURITY_DISABLE_INITIAL_ADMIN_PASSWORD_CHANGE: true
       GF_SECURITY_ADMIN_USER__FILE: /run/secrets/grafana_admin_user
       GF_SECURITY_ADMIN_PASSWORD__FILE: /run/secrets/grafana_admin_password
-
-      # Allow unsigned plugins and preinstall them
       GF_PLUGINS_ALLOW_LOADING_UNSIGNED_PLUGINS: grafana-metricsdrilldown-app,yesoreyeram-infinity-datasource
       GF_PLUGINS_PREINSTALL: yesoreyeram-infinity-datasource
     entrypoint:
