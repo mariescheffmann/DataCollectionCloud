@@ -179,7 +179,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.2.1",
+      "pluginVersion": "12.2.2",
       "targets": [
         {
           "datasource": {
@@ -298,7 +298,7 @@
                   "text": "ABORTING"
                 },
                 "9": {
-                  "color": "semi-dark-red",
+                  "color": "light-red",
                   "index": 9,
                   "text": "ABORTED"
                 },
@@ -396,7 +396,7 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "12.2.1",
+      "pluginVersion": "12.2.2",
       "targets": [
         {
           "datasource": {
@@ -419,10 +419,6 @@
                   "machineState"
                 ],
                 "type": "field"
-              },
-              {
-                "params": [],
-                "type": "last"
               }
             ]
           ],
@@ -434,8 +430,8 @@
     },
     {
       "datasource": {
-        "type": "influxdb",
-        "uid": "P80AD4CAF3BA298EA"
+        "type": "grafana-postgresql-datasource",
+        "uid": "PA2B3A7E061A952EA"
       },
       "fieldConfig": {
         "defaults": {
@@ -499,44 +495,50 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.2.1",
+      "pluginVersion": "12.2.2",
       "targets": [
         {
+          "dataset": "analyticsData",
           "datasource": {
-            "type": "grafana-testdata-datasource",
-            "uid": "df5vh2f5s09hcd"
+            "type": "grafana-postgresql-datasource",
+            "uid": "PA2B3A7E061A952EA"
           },
-          "groupBy": [],
-          "measurement": "error",
-          "orderByTime": "ASC",
-          "policy": "default",
+          "editorMode": "builder",
+          "format": "table",
+          "rawSql": "SELECT id FROM alarms LIMIT 50 ",
           "refId": "A",
-          "resultFormat": "time_series",
-          "scenarioId": "table_static",
-          "select": [
-            [
+          "sql": {
+            "columns": [
               {
-                "params": [
-                  "error"
+                "parameters": [
+                  {
+                    "name": "id",
+                    "type": "functionParameter"
+                  }
                 ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "last"
+                "type": "function"
               }
-            ]
-          ],
-          "tags": []
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          },
+          "table": "alarms"
         }
       ],
-      "title": "Current Alarm",
+      "title": "Current Alarm ID",
       "type": "stat"
     },
     {
       "datasource": {
-        "type": "influxdb",
-        "uid": "P80AD4CAF3BA298EA"
+        "type": "grafana-postgresql-datasource",
+        "uid": "PA2B3A7E061A952EA"
       },
       "fieldConfig": {
         "defaults": {
@@ -545,16 +547,17 @@
             "mode": "fixed"
           },
           "custom": {
-            "axisPlacement": "auto",
-            "fillOpacity": 70,
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "footer": {
+              "reducers": []
+            },
             "hideFrom": {
-              "legend": false,
-              "tooltip": false,
               "viz": false
             },
-            "insertNulls": false,
-            "lineWidth": 0,
-            "spanNulls": false
+            "inspect": false
           },
           "fieldMinMax": false,
           "mappings": [
@@ -594,54 +597,48 @@
       },
       "id": 12,
       "options": {
-        "alignValue": "left",
-        "legend": {
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "mergeValues": true,
-        "rowHeight": 0.9,
-        "showValue": "auto",
-        "tooltip": {
-          "hideZeros": false,
-          "mode": "single",
-          "sort": "none"
-        }
+        "cellHeight": "sm",
+        "showHeader": true
       },
-      "pluginVersion": "12.2.1",
+      "pluginVersion": "12.2.2",
       "targets": [
         {
+          "dataset": "analyticsData",
           "datasource": {
-            "type": "grafana-testdata-datasource",
-            "uid": "df5vh2f5s09hcd"
+            "type": "grafana-postgresql-datasource",
+            "uid": "PA2B3A7E061A952EA"
           },
-          "groupBy": [],
-          "measurement": "error",
-          "orderByTime": "ASC",
-          "policy": "default",
+          "editorMode": "builder",
+          "format": "table",
+          "rawSql": "SELECT description FROM alarms LIMIT 50 ",
           "refId": "A",
-          "resultFormat": "time_series",
-          "scenarioId": "table_static",
-          "select": [
-            [
+          "sql": {
+            "columns": [
               {
-                "params": [
-                  "error"
+                "parameters": [
+                  {
+                    "name": "description",
+                    "type": "functionParameter"
+                  }
                 ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "last"
+                "type": "function"
               }
-            ]
-          ],
-          "tags": []
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          },
+          "table": "alarms"
         }
       ],
       "title": "Current Alarm",
-      "type": "state-timeline"
+      "type": "table"
     },
     {
       "datasource": {
@@ -694,7 +691,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.2.1",
+      "pluginVersion": "12.2.2",
       "targets": [
         {
           "groupBy": [
@@ -787,7 +784,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.2.1",
+      "pluginVersion": "12.2.2",
       "targets": [
         {
           "groupBy": [
@@ -906,7 +903,7 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "12.2.1",
+      "pluginVersion": "12.2.2",
       "targets": [
         {
           "datasource": {
@@ -945,11 +942,7 @@
               },
               {
                 "params": [],
-                "type": "count"
-              },
-              {
-                "params": [],
-                "type": "cumulative_sum"
+                "type": "last"
               }
             ]
           ],
@@ -1011,7 +1004,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.2.1",
+      "pluginVersion": "12.2.2",
       "targets": [
         {
           "dataset": "AnalyticsData",
@@ -1103,7 +1096,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.2.1",
+      "pluginVersion": "12.2.2",
       "targets": [
         {
           "groupBy": [
@@ -1214,7 +1207,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.2.1",
+      "pluginVersion": "12.2.2",
       "targets": [
         {
           "groupBy": [
