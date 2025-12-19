@@ -124,6 +124,7 @@ services:
     ports:
       - "8883:8883" # MQTTS Only
       - "9001:9001" # WebSockets - will be removed for production
+      - "1883:1883" # For test only
     volumes:
       - ./deploy/mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
       - ./deploy/mosquitto/acl_file:/mosquitto/config/acl_file:ro
@@ -213,8 +214,8 @@ services:
   postgres:
     container_name: postgres
     image: postgres:18.1
-    expose:
-      - "5432"
+    ports:
+      - "5432:5432"
     environment:
       POSTGRES_USER_FILE: /run/secrets/postgres_user
       POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
